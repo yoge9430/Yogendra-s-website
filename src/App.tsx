@@ -10,6 +10,7 @@ import { About } from '@/components/About';
 import { Metrics } from '@/components/Metrics';
 import { CaseStudies } from '@/components/CaseStudies';
 import { Education } from '@/components/Education';
+import { Testimonials } from '@/components/Testimonials';
 import { Insights } from '@/components/Insights';
 import { Contact } from '@/components/Contact';
 
@@ -23,6 +24,7 @@ export default function App() {
         <Metrics />
         <CaseStudies />
         <Education />
+        <Testimonials />
         <Insights />
         <Contact />
       </main>

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { caseStudiesData } from '@/data/content';
+import { ProjectModal } from './ProjectModal';
 
 export function CaseStudies() {
+  const [selectedProject, setSelectedProject] = useState<typeof caseStudiesData[0] | null>(null);
+
   return (
     <section id="work" className="py-24 bg-slate-950">
       <div className="container mx-auto px-6">
@@ -28,8 +31,15 @@ export function CaseStudies() {
               className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 items-center`}
             >
               {/* Image Side */}
-              <div className="w-full md:w-1/2 group relative overflow-hidden rounded-2xl border border-slate-800">
-                <div className="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+              <div 
+                className="w-full md:w-1/2 group relative overflow-hidden rounded-2xl border border-slate-800 cursor-pointer"
+                onClick={() => setSelectedProject(project)}
+              >
+                <div className="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-center justify-center">
+                  <span className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-full text-white font-medium border border-white/20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    View Case Study
+                  </span>
+                </div>
                 <img
                   src={project.image}
                   alt={project.title}
@@ -47,11 +57,11 @@ export function CaseStudies() {
                 <div className="space-y-6">
                   <div>
                     <h4 className="text-slate-200 font-semibold mb-2">Problem</h4>
-                    <p className="text-slate-400">{project.problem}</p>
+                    <p className="text-slate-400 line-clamp-2">{project.problem}</p>
                   </div>
                   <div>
                     <h4 className="text-slate-200 font-semibold mb-2">Solution</h4>
-                    <p className="text-slate-400">{project.solution}</p>
+                    <p className="text-slate-400 line-clamp-2">{project.solution}</p>
                   </div>
                   <div className="pt-4 border-t border-slate-800">
                     <h4 className="text-blue-400 font-semibold mb-2">Impact</h4>
@@ -59,7 +69,10 @@ export function CaseStudies() {
                   </div>
                 </div>
 
-                <button className="mt-8 flex items-center gap-2 text-white font-medium hover:text-blue-400 transition-colors group">
+                <button 
+                  onClick={() => setSelectedProject(project)}
+                  className="mt-8 flex items-center gap-2 text-white font-medium hover:text-blue-400 transition-colors group"
+                >
                   View Case Study
                   <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -68,6 +81,12 @@ export function CaseStudies() {
           ))}
         </div>
       </div>
+
+      <ProjectModal 
+        project={selectedProject} 
+        isOpen={!!selectedProject} 
+        onClose={() => setSelectedProject(null)} 
+      />
     </section>
   );
 }
